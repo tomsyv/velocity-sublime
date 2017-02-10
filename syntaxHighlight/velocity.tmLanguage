@@ -315,8 +315,8 @@
 					<key>match</key>
 					<string>(?x)
 						(\#) (?: 
-							      \b(?:else|end)\b 
-							|(\{) \b(?:else|end)\b (\})
+							      \b(?:else|end|break|stop)\b 
+							|(\{) \b(?:else|end|break|stop)\b (\})
 						)</string>
 					<key>name</key>
 					<string>source.velocity.embedded</string>
@@ -443,7 +443,7 @@
 						<key>1</key>
 						<dict>
 							<key>name</key>
-							<string>punctuation.definition.arguments.begin.velocity</string>
+							<string>punctuation.definition.arguments.end.velocity</string>
 						</dict>
 					</dict>
 					<key>name</key>
@@ -452,8 +452,12 @@
 					<array>
 						<dict>
 							<key>include</key>
-							<string>#directives-arguments</string>
+							<string>#nest-parens</string>
 						</dict>
+						<dict>
+							<key>include</key>
+							<string>#directives-arguments</string>
+						</dict>				
 					</array>
 				</dict>
 				<dict>
@@ -628,9 +632,9 @@
 					</dict>
 					<key>match</key>
 					<string>(?x)
-						 ((\$ \!?   ) [a-zA-Z][-a-zA-Z0-9_]* \b) 
+						 ((\$ \!?   ) [a-zA-Z][-a-zA-Z0-9_]* \b)* 
 							( (?:(\.) [a-zA-Z][-a-zA-Z0-9_]* \b)* ) 
-							( (?:(\.) [a-zA-Z][-a-zA-Z0-9_]* \b)+ ) (\(\s*\))
+							( (?:(\.) [a-zA-Z][-a-zA-Z0-9_]* \b)+ ) (\(\s*\)) /g
 					</string>
 					<key>name</key>
 					<string>source.velocity.embedded</string>
@@ -638,9 +642,9 @@
 				<dict>
 					<key>begin</key>
 					<string>(?x)
-						 ((\$ \!?   ) [a-zA-Z_][-a-zA-Z0-9_]* \b) 
+						 ((\$ \!?   ) [a-zA-Z_][-a-zA-Z0-9_]* \b)* 
 							( (?:(\.) [a-zA-Z][-a-zA-Z0-9_]* \b)* ) 
-							( (?:(\.) [a-zA-Z][-a-zA-Z0-9_]* \b)+ ) (\()\s* 
+							( (?:(\.) [a-zA-Z][-a-zA-Z0-9_]* \b)+ ) (\()\s*
 					</string>
 					<key>beginCaptures</key>
 					<dict>
@@ -682,7 +686,12 @@
 						<key>7</key>
 						<dict>
 							<key>name</key>
-							<string>punctuation.definition.arguments.begin.velocity</string>
+							<string>punctuation.definition.method.arguments.begin.velocity</string>
+						</dict>
+						<key>8</key>
+						<dict>
+							<key>name</key>
+							<string>entity.name.function.velocity</string>
 						</dict>
 					</dict>
 					<key>end</key>
@@ -692,7 +701,7 @@
 						<key>1</key>
 						<dict>
 							<key>name</key>
-							<string>punctuation.definition.arguments.end.velocity</string>
+							<string>punctuation.definition.method.arguments.end.velocity</string>
 						</dict>
 					</dict>
 					<key>name</key>
@@ -752,13 +761,13 @@
 								</dict>
 							</dict>
 							<key>match</key>
-							<string>(\w+)(\(\))</string>
+							<string>(\w+)(\(.\))/g</string>
 							<key>name</key>
 							<string>variable.other.readwrite.velocity</string>
 						</dict>
 						<dict>
 							<key>begin</key>
-							<string>(\w+)(\()</string>
+							<string>(\w+)(\()/g</string>
 							<key>captures</key>
 							<dict>
 								<key>0</key>
@@ -774,7 +783,7 @@
 								<key>2</key>
 								<dict>
 									<key>name</key>
-									<string>punctuation.definition.arguments.begin.velocity</string>
+									<string>punctuation.definition.method.arguments.begin.velocity</string>
 								</dict>
 							</dict>
 							<key>end</key>
@@ -784,7 +793,7 @@
 								<key>0</key>
 								<dict>
 									<key>name</key>
-									<string>punctuation.definition.arguments.end.velocity</string>
+									<string>punctuation.definition.method.arguments.end.velocity</string>
 								</dict>
 							</dict>
 							<key>name</key>
@@ -823,7 +832,7 @@
 						<key>1</key>
 						<dict>
 							<key>name</key>
-							<string>punctuation.definition.arguments.end.velocity</string>
+							<string></string>
 						</dict>
 						<key>2</key>
 						<dict>
@@ -833,22 +842,27 @@
 						<key>3</key>
 						<dict>
 							<key>name</key>
-							<string>entity.name.function.velocity</string>
+							<string>punctuation.definition.function.velocity</string>
 						</dict>
 						<key>4</key>
 						<dict>
 							<key>name</key>
-							<string>punctuation.definition.function.velocity</string>
+							<string>punctuation.definition.method.arguments.begin.velocity</string>
 						</dict>
 						<key>5</key>
 						<dict>
 							<key>name</key>
-							<string>punctuation.definition.arguments.begin.velocity</string>
+							<string>punctuation.definition.method.arguments.end.velocity</string>
+						</dict>
+						<key>6</key>
+						<dict>
+							<key>name</key>
+							<string>meta.function-call.method.with-arguments.velocity</string>
 						</dict>
 					</dict>
 					<key>match</key>
 					<string>(?x)
-					\s* (\))( ( (?:(\.) [a-zA-Z][-a-zA-Z0-9_]* \b)+ ) (\()\s* )
+						\s* ( ( (?:(\.) [a-zA-Z][-a-zA-Z0-9_]* \b)+ ) (\()\s*) (?:\"*[-a-zA-Z0-9_]*\"*) (\)*) (?:[^\,]*)(,*)/g
 					</string>
 				</dict>
 				<dict>
@@ -891,7 +905,7 @@
 			<array>
 				<dict>
 					<key>match</key>
-					<string>\b(if|while|for|in|foreach|return|ifelse|else|case|macro|end|stop)\b</string>
+					<string>\b(if|while|for|in|foreach|return|ifelse|else|case|macro|end|stop|break)\b</string>
 					<key>name</key>
 					<string>keyword.control.velocity</string>
 				</dict>
@@ -943,20 +957,15 @@
 		</dict>
 		<key>nest-parens</key>
 		<dict>
+			<key>begin</key>
+			<string>\(</string>
+			<key>end</key>
+			<string>\)</string>
 			<key>patterns</key>
 			<array>
 				<dict>
-					<key>begin</key>
-					<string>\(</string>
-					<key>end</key>
-					<string>\)</string>
-					<key>patterns</key>
-					<array>
-						<dict>
-							<key>include</key>
-							<string>#nest-parens</string>
-						</dict>
-					</array>
+					<key>include</key>
+					<string>#directives-arguments</string>
 				</dict>
 			</array>
 		</dict>
@@ -996,7 +1005,19 @@
 				</dict>
 				<dict>
 					<key>match</key>
-					<string>(!|&amp;&amp;|\|\|)</string>
+					<string>(!)</string>
+					<key>name</key>
+					<string>keyword.operator.logical.java</string>
+				</dict>
+				<dict>
+					<key>match</key>
+					<string>(&amp;&amp;)</string>
+					<key>name</key>
+					<string>keyword.operator.logical.java</string>
+				</dict>
+				<dict>
+					<key>match</key>
+					<string>(\|\|)</string>
 					<key>name</key>
 					<string>keyword.operator.logical.java</string>
 				</dict>
@@ -1155,7 +1176,7 @@
 					<key>match</key>
 					<string>(?x)
 						 (\$ \!?   ) [a-zA-Z][-a-zA-Z0-9_]* \b
-						|(\$ \!? \{) [a-zA-Z][-a-zA-Z0-9_]* \b (\})
+						|(\$ \!? \{) [a-zA-Z][-a-zA-Z0-9_]* \b (\} /g)
 					</string>
 					<key>name</key>
 					<string>source.velocity.embedded</string>
